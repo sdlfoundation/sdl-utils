@@ -1,18 +1,18 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(sdlutils VERSION 1.0 LANGUAGES CXX)
+project(sdl-utils VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(SOURCES Source/SDLUtils.cpp)
 
-add_library(sdlutils STATIC ${SOURCES})
+add_library(sdl-utils STATIC ${SOURCES})
 
-set_target_properties(sdlutils PROPERTIES
+set_target_properties(sdl-utils PROPERTIES
     VERSION ${PROJECT_VERSION}
-    OUTPUT_NAME "sdlutils"
+    OUTPUT_NAME "sdl-utils"
 )
 
-target_include_directories(sdlutils PUBLIC Include)
-target_include_directories(sdlutils PUBLIC Source)
+target_include_directories(sdl-utils PUBLIC Include)
+target_include_directories(sdl-utils PUBLIC Source)

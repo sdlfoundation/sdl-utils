@@ -15,4 +15,4 @@ set_target_properties(sdl-utils PROPERTIES
 )
 
 target_include_directories(sdl-utils PUBLIC Include)
-target_include_directories(sdl-utils PUBLIC Source)
+target_include_directories(sdl-utils PRIVATE Source)

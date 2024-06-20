@@ -34,6 +34,14 @@ typedef	unsigned short	ushort;
 typedef	unsigned int	uint;
 typedef	unsigned long	ulong;
 
+typedef float f32;
+typedef double f64;
+typedef long double f128;
+
+static_assert(sizeof(f32) == 4, "f32 should be 4 bytes in size");
+static_assert(sizeof(f64) == 8, "f64 should be 8 bytes in size");
+static_assert(sizeof(f128) == 16, "f128 should be 16 bytes in size");
+
 
 #define ALIGN_UP(x, a) ((((uintptr_t)x) + (((uintptr_t)a)-1)) & ~(((uintptr_t)a)-1))
 #define ALIGN_DOWN(x, a) ((uintptr_t)(x) & ~(((uintptr_t)(a)) - 1))

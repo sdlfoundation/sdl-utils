@@ -1,6 +1,7 @@
 #pragma once
 
 #include <limits.h>
+#include <quadmath.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>

@@ -19,7 +19,7 @@ typedef __int128_t s128;
 
 typedef float f32;
 typedef double f64;
-typedef long double f128;
+typedef __float128 f128;
 
 static_assert(sizeof(f32) == 4, "f32 should be 4 bytes in size");
 static_assert(sizeof(f64) == 8, "f64 should be 8 bytes in size");

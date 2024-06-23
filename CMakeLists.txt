@@ -9,6 +9,15 @@ set(SOURCES Source/SDLUtils.cpp)
 
 add_library(sdl-utils STATIC ${SOURCES})
 
+find_library(QUADMATH_LIBRARY quadmath)
+
+if (QUADMATH_LIBRARY)
+    target_link_libraries(MyQuadmathExecutable ${QUADMATH_LIBRARY})
+else()
+    target_compile_definitions(sdl-utils PRIVATE NOT_HAVE_QUADMATH)
+    message(WARNING "quadmath library not found, f128 will not be available")
+endif()
+
 set_target_properties(sdl-utils PROPERTIES
     VERSION ${PROJECT_VERSION}
     OUTPUT_NAME "sdl-utils"

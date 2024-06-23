@@ -1,10 +1,11 @@
 #pragma once
 
 #include <limits.h>
-#include <quadmath.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+
+// Cross-platform types
 
 typedef uint8_t u8;
 typedef uint16_t u16;
@@ -20,11 +21,9 @@ typedef __int128_t s128;
 
 typedef float f32;
 typedef double f64;
-typedef __float128 f128;
 
 static_assert(sizeof(f32) == 4, "f32 should be 4 bytes in size");
 static_assert(sizeof(f64) == 8, "f64 should be 8 bytes in size");
-static_assert(sizeof(f128) == 16, "f128 should be 16 bytes in size");
 
 typedef volatile u8 vu8;
 typedef volatile u16 vu16;
@@ -40,12 +39,24 @@ typedef volatile s128 vs128;
 
 typedef volatile f32 vf32;
 typedef volatile f64 vf64;
-typedef volatile f128 vf128;
 
 typedef unsigned char uchar;
 typedef unsigned short ushort;
 typedef unsigned int uint;
 typedef unsigned long ulong;
+
+// Library-dependent types
+
+#ifndef NOT_HAVE_QUADMATH
+
+#include <quadmath.h>
+
+typedef __float128 f128;
+typedef volatile f128 vf128;
+
+#endif
+
+// Macros
 
 #define ALIGN_UP(x, a)                                                         \
   ((((uintptr_t)x) + (((uintptr_t)a) - 1)) & ~(((uintptr_t)a) - 1))

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.29.6)
 
 project(sdl-utils VERSION 1.0 LANGUAGES CXX)
 

@@ -1,17 +1,17 @@
 #pragma once
 
-#include <ranges>
-#include <string>
-#include <vector>
-#include <iterator>
 #include <algorithm>
-#include <sstream>
 #include <charconv>
+#include <iterator>
+#include <ranges>
+#include <sstream>
+#include <string>
 #include <system_error>
+#include <vector>
 
 namespace SDLUtils {
-    std::vector<std::string> split(const std::string &input) noexcept {
-        std::istringstream buffer(input);
+    inline std::vector<std::string> split(const std::string& input) noexcept {
+        std::istringstream       buffer(input);
         std::vector<std::string> ret;
 
         std::copy(std::istream_iterator<std::string>(buffer),
@@ -21,50 +21,55 @@ namespace SDLUtils {
         return ret;
     }
 
-    inline std::string ltrim(const std::string &s) noexcept {
+    inline std::string ltrim(const std::string& s) noexcept {
         std::string sCopy = s;
-        sCopy.erase(sCopy.begin(), std::find_if(sCopy.begin(), sCopy.end(), [](unsigned char ch) {
-            return !std::isspace(ch);
-        }));
+        sCopy.erase(sCopy.begin(), std::find_if(sCopy.begin(), sCopy.end(),
+                                                [](unsigned char ch) {
+                                                    return !std::isspace(ch);
+                                                }));
         return sCopy;
     }
 
-    inline std::string rtrim(const std::string &s) noexcept {
+    inline std::string rtrim(const std::string& s) noexcept {
         std::string sCopy = s;
-        sCopy.erase(std::find_if(sCopy.rbegin(), sCopy.rend(), [](unsigned char ch) {
-            return !std::isspace(ch);
-        }).base(), sCopy.end());
+        sCopy.erase(
+            std::find_if(sCopy.rbegin(), sCopy.rend(),
+                         [](unsigned char ch) { return !std::isspace(ch); })
+                .base(),
+            sCopy.end());
         return sCopy;
     }
 
-    inline std::string trim(const std::string &s) noexcept {
+    inline std::string trim(const std::string& s) noexcept {
         std::string trim = rtrim(s);
         return ltrim(trim);
     }
 
-    std::vector<std::string> splitn(const std::string &s, char delimiter, int max_splits) {
+    inline std::vector<std::string> splitn(const std::string& s, char delimiter,
+                                           int max_splits) {
         std::vector<std::string> result;
-        size_t start = 0;
-        size_t end = s.find(delimiter);
-        int splits = 0;
+        size_t                   start  = 0;
+        size_t                   end    = s.find(delimiter);
+        int                      splits = 0;
 
         while (end != std::string::npos && splits < max_splits) {
             result.push_back(s.substr(start, end - start));
             start = end + 1;
-            end = s.find(delimiter, start);
+            end   = s.find(delimiter, start);
             splits++;
         }
-        
+
         result.push_back(s.substr(start));
-        
+
         return result;
     }
 
 
-    std::vector<std::string> splitf(const std::string& s, char delimiter) {
+    inline std::vector<std::string> splitf(const std::string& s,
+                                           char               delimiter) {
         std::vector<std::string> parts;
-        size_t start = 0;
-        size_t end = 0;
+        size_t                   start = 0;
+        size_t                   end   = 0;
 
         while (end != std::string::npos) {
             end = s.find(delimiter, start);
@@ -80,10 +85,11 @@ namespace SDLUtils {
     }
 
     template <typename T>
-    std::optional<T> strToInt(const std::string& str) {
+    inline std::optional<T> strToInt(const std::string& str) {
         T result;
 
-        auto [ptr, ec] = std::from_chars(str.data(), str.data() + str.size(), result);
+        auto [ptr, ec] =
+            std::from_chars(str.data(), str.data() + str.size(), result);
 
         if (ec == std::errc()) {
             return result;
@@ -93,13 +99,15 @@ namespace SDLUtils {
     }
 
     template <typename T>
-    std::optional<T> hexStrToInt(const std::string& str) {
-        if (str.size() < 3 || (str[0] != '0' || (str[1] != 'x' && str[1] != 'X'))) {
+    inline std::optional<T> hexStrToInt(const std::string& str) {
+        if (str.size() < 3
+            || (str[0] != '0' || (str[1] != 'x' && str[1] != 'X'))) {
             return std::nullopt;
         }
 
         T result;
-        auto [ptr, ec] = std::from_chars(str.data() + 2, str.data() + str.size(), result, 16);
+        auto [ptr, ec] = std::from_chars(str.data() + 2,
+                                         str.data() + str.size(), result, 16);
 
         if (ec == std::errc()) {
             return result;
@@ -107,4 +115,12 @@ namespace SDLUtils {
             return std::nullopt;
         }
     }
-}
+
+    template <typename T>
+    inline std::string toStringWithPrecision(const T& a_value, int n) {
+        std::ostringstream out;
+        out.precision(n);
+        out << std::fixed << a_value;
+        return std::move(out).str();
+    }
+} // namespace SDLUtils
